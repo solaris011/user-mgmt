@@ -30,8 +30,18 @@ class AddUser extends React.Component {
          alert("Email domain must end with .com, .net, .edu, or .mx!");
          return;
       }
+      
+      // Check if user with this email already exists
+      if (this.props.existingUsers && this.props.existingUsers.some(user => user.email.toLowerCase() === this.state.email.toLowerCase())) {
+         alert("A user with this email already exists!");
+         this.setState({ name: '', email: '' });
+         return;
+      }
+      
       this.props.addUserHandler(this.state);
       this.setState({ name: '', email: '' });
+
+
       // Navigate back to home page after adding user
       if (this.props.navigate) {
          this.props.navigate('/');

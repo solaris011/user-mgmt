@@ -92,7 +92,10 @@ function App() {
           <Route 
             path="/add" 
             element={
-              <AddUserWithNavigate addUserHandler={addUserHandler} />
+              <AddUserWithNavigate 
+                addUserHandler={addUserHandler} 
+                existingUsers={users}
+              />
             } 
           />
         </Routes>
