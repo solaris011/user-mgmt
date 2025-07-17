@@ -1,48 +1,70 @@
 // import logo from '../logo.svg';
-import React from 'react';
+import React, { use } from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import '../App.css';
 import Header from './Header';
 import AddUser from './AddUser';
 import UserList from './UserList';
 
 function App() {
-  const users = [
-    {
-      id: 1,
-      name: 'Michael Scott',
-      email: 'michael@dundermifflin.com'
-    },
-    {
-      id: 2,
-      name: 'Dwight Schrute',
-      email: 'dwight@dundermifflin.com'
-    },
-    {
-      id: 3,
-      name: 'Jim Halpert',
-      email: 'jim@dundermifflin.com'
-    },
-    {
-      id: 4,
-      name: 'Pam Beesly',
-      email: 'pam@dundermifflin.com'
-    },
-    {
-      id: 5,
-      name: 'Ryan Howard',
-      email: 'ryan@dundermifflin.com'
-    },
-    {
-      id: 6,
-      name: 'Kelly Kapoor',
-      email: 'kelly@dundermifflin.com'
+  const LOCAL_STORAGE_KEY = 'users';
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const retrievedUsers = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+    if (retrievedUsers) {
+      setUsers(retrievedUsers);
     }
-  ]
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(users));
+  }, [users]);
+
+  // const users = [
+  //   {
+  //     id: 1,
+  //     name: 'Michael Scott',
+  //     email: 'michael.scott@dundermifflin.com'
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'Dwight Schrute',
+  //     email: 'dwight.schrute@dundermifflin.com'
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'Jim Halpert',
+  //     email: 'jim.halpert@dundermifflin.com'
+  //   },
+  //   {
+  //     id: 4,
+  //     name: 'Pam Beesly',
+  //     email: 'pam.beesly@dundermifflin.com'
+  //   },
+  //   {
+  //     id: 5,
+  //     name: 'Ryan Howard',
+  //     email: 'ryan.howard@dundermifflin.com'
+  //   },
+  //   {
+  //     id: 6,
+  //     name: 'Kelly Kapoor',
+  //     email: 'kelly.kapoor@dundermifflin.com'
+  //   }
+  // ]
+
+  const addUserHandler = (user) => {
+    console.log(user);
+    setUsers([...users, { id: users.length + 1, ...user }]);
+  }
+
   return (
     <div className="ui container">
       {/* <img src={logo} className="App-logo" alt="logo" /> */}
       <Header />
-      <AddUser />
+      <AddUser addUserHandler={addUserHandler} />
       <UserList users={users} />
     </div>
   );

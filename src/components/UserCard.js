@@ -1,0 +1,19 @@
+import React from "react";
+import user from "../images/user.png";
+
+const CardUser = (props) => {
+   const { id, name, email } = props.user;
+
+   return (
+      <div className="item" style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+         <img className="ui avatar image" src={user} alt="user" style={{ width: '50px', height: '50px', marginRight: '10px' }} />
+         <div className="content" style={{ flex: 1 }}>
+            <div className="header">{name}</div>
+            <div>{email}</div>
+         </div>
+         <i className="trash alternate outline icon large" style={{ color: 'red', cursor: 'pointer', position: 'absolute', right: '15px' }}></i>
+      </div>
+   );
+}
+
+export default CardUser;
