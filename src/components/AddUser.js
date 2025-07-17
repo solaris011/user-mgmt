@@ -56,7 +56,7 @@ class AddUser extends React.Component {
              <button className="ui button" onClick={() => this.props.navigate('/')}>Go Back to Home</button>
            </div>
            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
-             <div className="ui main" style={{ width: '350px', backgroundColor: '#fff', padding: '24px', borderRadius: '10px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+             <div className="ui main" style={{ width: '350px', backgroundColor: 'rgb(211, 211, 211)', padding: '24px', borderRadius: '10px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
                <div style={{ marginBottom: '20px' }}>
                  <h2 style={{ margin: 0, textAlign: 'center' }}>Add User</h2>
                </div>

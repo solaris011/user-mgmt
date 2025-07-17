@@ -22,7 +22,7 @@ const UserList = (props) => {
        </UserCard>;
    });
    return (
-      <div className="ui main" style={{ marginTop: '20px', padding: '20px', backgroundColor: '#909090' }}>
+      <div className="ui main" style={{ backgroundColor: '#909090' }}>
          <div style={{ position: 'relative', marginBottom: '20px', height: '36px' }}>
            <h2 style={{ margin: 0, textAlign: 'center', position: 'absolute', left: '50%', transform: 'translateX(-50%)', width: 'max-content' }}>User list</h2>
            <div style={{ position: 'absolute', right: 0, top: 0 }}>
