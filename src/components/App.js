@@ -3,6 +3,7 @@ import React, { use } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import '../App.css';
+import { v4 as uuidv4 } from 'uuid';
 import Header from './Header';
 import AddUser from './AddUser';
 import UserList from './UserList';
@@ -57,15 +58,23 @@ function App() {
 
   const addUserHandler = (user) => {
     console.log(user);
-    setUsers([...users, { id: users.length + 1, ...user }]);
+    setUsers([...users, { id: uuidv4(), ...user }]);
   }
+
+  const removeUserHandler = (id) => {
+    const newUserList = users.filter((user) => {
+      return user.id !== id;
+    });
+    setUsers(newUserList);
+  }
+
 
   return (
     <div className="ui container">
       {/* <img src={logo} className="App-logo" alt="logo" /> */}
       <Header />
       <AddUser addUserHandler={addUserHandler} />
-      <UserList users={users} />
+      <UserList users={users} getUserId={removeUserHandler} />
     </div>
   );
 }

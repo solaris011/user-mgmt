@@ -11,7 +11,10 @@ const CardUser = (props) => {
             <div className="header">{name}</div>
             <div>{email}</div>
          </div>
-         <i className="trash alternate outline icon large" style={{ color: 'red', cursor: 'pointer', position: 'absolute', right: '15px' }}></i>
+         <i 
+            className="trash alternate outline icon large" style={{ color: 'red', cursor: 'pointer', position: 'absolute', right: '15px' }}
+            onClick={() => props.clickHandler(id)}
+         ></i>
       </div>
    );
 }
