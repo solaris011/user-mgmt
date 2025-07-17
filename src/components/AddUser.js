@@ -21,13 +21,13 @@ class AddUser extends React.Component {
       }
       // Validate email field - must start with letter, have @, period in domain, and specific extensions
       const emailRegex = /^[a-zA-Z][a-zA-Z0-9._-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      const allowedDomains = /\.(com|net|edu|mx)$/;
+      const allowedDomains = /\.(com|net|edu|org|io|us|mx)$/;
       if (!emailRegex.test(this.state.email)) {
          alert("Email must start with a letter and have a valid format!");
          return;
       }
       if (!allowedDomains.test(this.state.email)) {
-         alert("Email domain must end with .com, .net, .edu, or .mx!");
+         alert("Email domain must end with .com, .net, .org, .edu, .io, .us or .mx!");
          return;
       }
       
@@ -49,32 +49,41 @@ class AddUser extends React.Component {
    }
 
    render() {
+      
       return (
-         <div className="ui main" style={{ marginTop: '20px', padding: '20px' }}>
-            <h2>Add User</h2>
-            <form className="ui form" onSubmit={this.add}>
-               <div className="field">
-                  <label>Name:</label>
-                  <input type="text" name="name" 
-                  placeholder="Name" 
-                  value={this.state.name}
-                  onChange={ (e) => this.setState({name: e.target.value})}/>  
+         <>
+           <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
+             <button className="ui button" onClick={() => this.props.navigate('/')}>Go Back to Home</button>
+           </div>
+           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+             <div className="ui main" style={{ width: '350px', backgroundColor: '#fff', padding: '24px', borderRadius: '10px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+               <div style={{ marginBottom: '20px' }}>
+                 <h2 style={{ margin: 0, textAlign: 'center' }}>Add User</h2>
                </div>
-               <div className="field">
-                  <label>Email:</label>
-                  <input type="text" name="email" 
-                  placeholder="Email" 
-                  value={this.state.email}
-                  onChange={ (e) => this.setState({email: e.target.value})}/>  
-               </div>
-               <button className="ui button blue" type="submit">Add User</button>
-            </form>
-         </div>
-      );   
+               <form className="ui form" onSubmit={this.add}>
+                 <div className="field">
+                    <label>Name:</label>
+                    <input type="text" name="name" 
+                    placeholder="Name" 
+                    value={this.state.name}
+                    onChange={ (e) => this.setState({name: e.target.value})}/>  
+                 </div>
+                 <div className="field">
+                    <label>Email:</label>
+                    <input type="text" name="email" 
+                    placeholder="Email" 
+                    value={this.state.email}
+                    onChange={ (e) => this.setState({email: e.target.value})}/>  
+                 </div>
+                 <button className="ui button blue" type="submit" style={{ width: '100%' }}>Add User</button>
+               </form>
+             </div>
+           </div>
+         </>
+      );
    }
-}
+};
 
-// Wrapper component to use useNavigate with class component
 const AddUserWithNavigate = (props) => {
    const navigate = useNavigate();
    return <AddUser {...props} navigate={navigate} />;

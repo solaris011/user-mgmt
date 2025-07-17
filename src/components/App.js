@@ -5,9 +5,11 @@ import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import '../App.css';
 import { v4 as uuidv4 } from 'uuid';
+import { useParams } from 'react-router-dom'
 import Header from './Header';
 import AddUserWithNavigate from './AddUser';
 import UserList from './UserList';
+import UserDetail from './UserDetail';
 
 function App() {
   const LOCAL_STORAGE_KEY = 'users';
@@ -43,6 +45,26 @@ function App() {
       id: 6,
       name: 'Kelly Kapoor',
       email: 'kelly.kapoor@dundermifflin.com'
+    },
+    {
+      id: 7,
+      name: 'Stanley Hudson',
+      email: 'stanley.hudson@dundermifflin.com'
+    },
+    {
+      id: 8,
+      name: 'Angela Martin',
+      email: 'angela.martin@dundermifflin.com'
+    },
+    {
+      id: 9,
+      name: 'Oscar Martinez',
+      email: 'oscar.martinez@dundermifflin.com'
+    },
+    {
+      id: 10,
+      name: 'Phyllis Vance',
+      email: 'phyllis.vance@dundermifflin.com'  
     }
   ];
 
@@ -62,15 +84,17 @@ function App() {
   
 
   const addUserHandler = (user) => {
-    console.log(user);
     setUsers([...users, { id: uuidv4(), ...user }]);
+    alert('User added successfully!');
   }
 
   const removeUserHandler = (id) => {
-    const newUserList = users.filter((user) => {
-      return user.id !== id;
-    });
-    setUsers(newUserList);
+    const userToDelete = users.find((user) => user.id === id);
+    if (window.confirm(`Are you sure you want to delete ${userToDelete?.name || 'this user'}?`)) {
+      const newUserList = users.filter((user) => user.id !== id);
+      setUsers(newUserList);
+      alert('User deleted successfully!');
+    }
   }
 
 
@@ -98,11 +122,23 @@ function App() {
               />
             } 
           />
+          <Route 
+            path="/user/:id" 
+            element={<UserDetailWrapper users={users} />} 
+          />
         </Routes>
       </Router>
       
     </div>
   );
+}
+
+// Wrapper to extract user from id param and pass to UserDetail
+;
+function UserDetailWrapper({ users }) {
+  const { id } = useParams();
+  const user = users.find(u => String(u.id) === String(id));
+  return <UserDetail user={user || {}} />;
 }
 
 export default App;
