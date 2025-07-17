@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 class AddUser extends React.Component {
    state = {
@@ -31,6 +32,10 @@ class AddUser extends React.Component {
       }
       this.props.addUserHandler(this.state);
       this.setState({ name: '', email: '' });
+      // Navigate back to home page after adding user
+      if (this.props.navigate) {
+         this.props.navigate('/');
+      }
    }
 
    render() {
@@ -59,4 +64,10 @@ class AddUser extends React.Component {
    }
 }
 
-export default AddUser;
+// Wrapper component to use useNavigate with class component
+const AddUserWithNavigate = (props) => {
+   const navigate = useNavigate();
+   return <AddUser {...props} navigate={navigate} />;
+};
+
+export default AddUserWithNavigate;
