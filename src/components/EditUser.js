@@ -1,13 +1,20 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
-class AddUser extends React.Component {
-   state = {
-      name: '',
-      email: ''
+class EditUser extends React.Component {
+   constructor(props) {
+      super(props)
+
+      // React Router provides the user data through location state
+      const { id, name, email } = props.location?.state?.contact || {};
+      this.state = {
+         id: id || '',
+         name: name || '',
+         email: email || ''
+      }
    }
 
-   add = (e) => {
+   update = (e) => {
       e.preventDefault();
       if (this.state.name === "" || this.state.email === "") {
          alert("All the fields are required!");
@@ -31,24 +38,36 @@ class AddUser extends React.Component {
          return;
       }
       
-      // Check if user with this email already exists
-      if (this.props.existingUsers && this.props.existingUsers.some(user => user.email.toLowerCase() === this.state.email.toLowerCase())) {
+      // Check if user with this email already exists (but allow the current user to keep their email)
+      if (this.props.existingUsers && this.props.existingUsers.some(user => 
+         user.email.toLowerCase() === this.state.email.toLowerCase() && user.id !== this.state.id)) {
          alert("A user with this email already exists!");
-         this.setState({ name: '', email: '' });
          return;
       }
       
-      this.props.addUserHandler(this.state);
-      this.setState({ name: '', email: '' });
+      this.props.editUserHandler(this.state);
 
-
-      // Navigate back to home page after adding user
+      // Navigate back to home page after updating user
       if (this.props.navigate) {
          this.props.navigate('/');
       }
    }
 
    render() {
+      // If no user data is available, show error message
+      if (!this.props.location?.state?.contact) {
+        return (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+            <div style={{ textAlign: 'center' }}>
+              <h2>No User Selected</h2>
+              <p>Please select a user to edit from the user list.</p>
+              <button className="ui button" onClick={() => this.props.navigate('/')}>
+                Go Back Home
+              </button>
+            </div>
+          </div>
+        );
+      }
       
       return (
          <>
@@ -58,24 +77,26 @@ class AddUser extends React.Component {
            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
              <div className="ui main" style={{ width: '350px', backgroundColor: 'rgb(211, 211, 211)', padding: '24px', borderRadius: '10px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
                <div style={{ marginBottom: '20px' }}>
-                 <h2 style={{ margin: 0, textAlign: 'center', fontSize: '28px' }}>Add User</h2>
+                 <h2 style={{ margin: 0, textAlign: 'center' }}>Edit User</h2>
                </div>
-               <form className="ui form" onSubmit={this.add}>
-                 <div className="field" style={{ fontSize: '20px' }}>
+
+               {/* Change to Update form */}
+               <form className="ui form" onSubmit={this.update}>
+                 <div className="field">
                     <label>Name:</label>
                     <input type="text" name="name" 
                     placeholder="Name" 
                     value={this.state.name}
                     onChange={ (e) => this.setState({name: e.target.value})}/>  
                  </div>
-                 <div className="field" style={{ fontSize: '20px' }}>
+                 <div className="field">
                     <label>Email:</label>
                     <input type="text" name="email" 
                     placeholder="Email" 
                     value={this.state.email}
                     onChange={ (e) => this.setState({email: e.target.value})}/>  
                  </div>
-                 <button className="ui button blue" type="submit" style={{ width: '100%', fontSize: '20px' }}>Add User</button>
+                 <button className="ui button blue" type="submit" style={{ width: '100%' }}>Update User</button>
                </form>
              </div>
            </div>
@@ -84,9 +105,10 @@ class AddUser extends React.Component {
    }
 };
 
-const AddUserWithNavigate = (props) => {
+const EditUserWithNavigate = (props) => {
    const navigate = useNavigate();
-   return <AddUser {...props} navigate={navigate} />;
+   const location = useLocation();
+   return <EditUser {...props} navigate={navigate} location={location} />;
 };
 
-export default AddUserWithNavigate;
+export default EditUserWithNavigate;

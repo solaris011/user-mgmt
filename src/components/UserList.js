@@ -9,7 +9,7 @@ const UserList = (props) => {
       props.getUserId(id);
    };
 
-   // Always use props.users since App.js now handles the default users
+   
    const users = props.users || [];
 
    const renderUserList = users.map((user, index) => {
@@ -24,7 +24,8 @@ const UserList = (props) => {
    return (
       <div className="ui main" style={{ backgroundColor: '#909090' }}>
          <div style={{ position: 'relative', marginBottom: '20px', height: '36px' }}>
-           <h2 style={{ margin: 0, textAlign: 'center', position: 'absolute', left: '50%', transform: 'translateX(-50%)', width: 'max-content' }}>User list</h2>
+           <h2 style={{ margin: 0, textAlign: 'center', position: 'absolute', left: '580px', 
+            fontSize: '25px', width: 'max-content' }}>User list</h2>
            <div style={{ position: 'absolute', right: 0, top: 0 }}>
              <Link to="/add">
                <button className="ui button blue" style={{ height: '36px' }}>Add User</button>

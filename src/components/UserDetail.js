@@ -8,8 +8,9 @@ const UserDetail = (props) => {
    return (
       <>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
-          <div className="item" style={{
-             width: '455px',
+          <div style={{
+             width: '500px',
+             
              display: 'flex',
              alignItems: 'center',
              position: 'relative',
@@ -17,21 +18,23 @@ const UserDetail = (props) => {
              padding: '20px',
              borderRadius: '10px',
              marginBottom: '5px',
-             boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+             boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+             boxSizing: 'border-box',
+      
           }}>
-             <img className="ui avatar image" src={user} alt="user" style={{ width: '100px', height: '100px', marginRight: '20px' }} />
+             <img src={user} alt="user" style={{ width: '100px', height: '100px', marginRight: '10px' }} />
              <div style={{ flex: 1, textAlign: 'center', marginBottom: '10px' }}>
                <div style={{ marginBottom: '8px' }}>
-                 <strong style={{ display: 'block', fontSize: '25px', color: '#444' }}>User ID: {id}</strong>
+                 <strong style={{ display: 'block', fontSize: '25px', color: '#444', padding: '5px' }}>User ID: {id}</strong>
                </div>
-               <div className="header" style={{ fontWeight: 'bold', fontSize: '20px' }}>{name}</div>
-               <div style={{ color: '#555',  fontSize: '18px' }}>{email}</div>
+               <div style={{ fontWeight: 'bold', fontSize: '20px', padding: '5px' }}>{name}</div>
+               <div style={{ color: '#555',  fontSize: '18px', padding: '5px' }}>{email}</div>
              </div>
           </div>
         </div>
         <div style={{ marginTop: '20px', textAlign: 'center' }}>
           <Link to="/" style={{ textDecoration: 'none', color: 'blue' }}>
-            <button className="ui button">
+            <button style={{ padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
               Go Back Home
             </button>
           </Link>

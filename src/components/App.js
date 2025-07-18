@@ -4,67 +4,67 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import '../App.css';
-import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom'
 import Header from './Header';
 import AddUserWithNavigate from './AddUser';
+import EditUserWithNavigate from './EditUser';
 import UserList from './UserList';
 import UserDetail from './UserDetail';
 
 function App() {
   const LOCAL_STORAGE_KEY = 'users';
   
-  // Default users to show if localStorage is empty
+  // Create a default list of users
   const defaultUsers = [
     {
       id: 1,
-      name: 'Michael Scott',
-      email: 'michael.scott@dundermifflin.com'
+      name: 'Ana Lopez',
+      email: 'ana.lopez@hp.com'
     },
     {
       id: 2,
-      name: 'Dwight Schrute',
-      email: 'dwight.schrute@dundermifflin.com'
+      name: 'Jorge Santamarina',
+      email: 'jorge.santamarina@dell.com.mx'
     },
     {
       id: 3,
-      name: 'Jim Halpert',
-      email: 'jim.halpert@dundermifflin.com'
+      name: 'Paula Benitez',
+      email: 'paula-benitez2@coca-cola.com'
     },
     {
       id: 4,
-      name: 'Pam Beesly',
-      email: 'pam.beesly@dundermifflin.com'
+      name: 'Luis Gonzalez',
+      email: 'luis.gonzalez5@ibm.com.mx'
     },
     {
       id: 5,
-      name: 'Ryan Howard',
-      email: 'ryan.howard@dundermifflin.com'
+      name: 'Maria Luisa Alvarez',
+      email: 'maria.luisa.alvarez@toyota.com.mx'
     },
     {
       id: 6,
-      name: 'Kelly Kapoor',
-      email: 'kelly.kapoor@dundermifflin.com'
+      name: 'Jose Alberto Rosas Perez',
+      email: 'ja-rosas-p@toshiba-mex.com'
     },
     {
       id: 7,
-      name: 'Stanley Hudson',
-      email: 'stanley.hudson@dundermifflin.com'
+      name: 'Vanessa Gutierrez',
+      email: 'vanessa.gutierrez@gnp-seguros.com'
     },
     {
       id: 8,
-      name: 'Angela Martin',
-      email: 'angela.martin@dundermifflin.com'
+      name: 'Pedro Gutierrez Garcia',
+      email: 'pedro.gutierrez@atlas.com.mx'
     },
     {
       id: 9,
       name: 'Oscar Martinez',
-      email: 'oscar.martinez@dundermifflin.com'
+      email: 'oscar.martinez@dhl.com'
     },
     {
       id: 10,
-      name: 'Phyllis Vance',
-      email: 'phyllis.vance@dundermifflin.com'  
+      name: 'Elena Sanchez',
+      email: 'elena.sanchez@adecco.com.mx'
     }
   ];
 
@@ -82,10 +82,20 @@ function App() {
   }, [users]);
 
   
-
+  // Function to add a new user
   const addUserHandler = (user) => {
-    setUsers([...users, { id: uuidv4(), ...user }]);
+    // Find the highest ID among existing users and add 1
+    const maxId = users.length > 0 ? Math.max(...users.map(u => Number(u.id) || 0)) : 0;
+    const newId = maxId + 1;
+    
+    setUsers([...users, { id: newId, ...user }]);
     alert('User added successfully!');
+  }
+
+  const editUserHandler = (user) => {
+    const updatedUsers = users.map(u => u.id === user.id ? user : u);
+    setUsers(updatedUsers);
+    alert('User updated successfully!');
   }
 
   const removeUserHandler = (id) => {
@@ -122,6 +132,17 @@ function App() {
               />
             } 
           />
+
+          <Route 
+            path="/edit" 
+            element={
+              <EditUserWithNavigate 
+                editUserHandler={editUserHandler} 
+                existingUsers={users}
+              />
+            } 
+          />
+
           <Route 
             path="/user/:id" 
             element={<UserDetailWrapper users={users} />} 
@@ -134,7 +155,7 @@ function App() {
 }
 
 // Wrapper to extract user from id param and pass to UserDetail
-;
+
 function UserDetailWrapper({ users }) {
   const { id } = useParams();
   const user = users.find(u => String(u.id) === String(id));
